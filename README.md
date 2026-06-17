@@ -2,7 +2,7 @@
 
 > 教练，我想练 Skill。
 
-<img width="1254" height="1254" alt="image" src="https://github.com/user-attachments/assets/883565ab-b515-4afd-ab59-74f1a562defe" />
+<img width="600" height="600" alt="image" src="https://github.com/user-attachments/assets/883565ab-b515-4afd-ab59-74f1a562defe" />
 
 
 有些 Skill 刚出生的时候很有天赋。
