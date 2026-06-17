@@ -1,0 +1,3 @@
+display_name: Anxi Skill
+short_description: Train complete Agent Skill packages with bounded patches, validation, logs, and rejected-memory.
+default_prompt: Use anxi-skill to train this skill package. Inspect the package first, narrow my request to one target_move, propose bounded candidate patches, and do not overwrite originals without confirmation.

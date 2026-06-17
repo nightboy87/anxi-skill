@@ -1,0 +1,27 @@
+patches:
+  - id: PATCH-001
+    file: "SKILL.md"
+    op: "insert_after"
+    target_text: "## Required Flow"
+    rationale: "Current flow needs an explicit bound that keeps training scoped to one target_move."
+    evidence:
+      - "target_move"
+      - "package_scan"
+    risk: "May require a second training round for broader behavior changes."
+    validation:
+      - "manual_diff_review"
+    content: |
+      Keep each training round focused on one target_move. If the user asks for several improvements, split them into separate rounds and ask which one to train first.
+
+  - id: PATCH-002
+    file: "scripts/example.py"
+    op: "replace_block"
+    target_text: "print('old')"
+    rationale: "Example script patch demonstrates that scripts require executable validation."
+    evidence:
+      - "script_validation_rule"
+    risk: "Script changes can break deterministic behavior if validation is skipped."
+    validation:
+      - "python scripts/example.py --help"
+    content: |
+      print('new')
