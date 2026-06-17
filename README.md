@@ -230,9 +230,11 @@ target_move:
 
 ---
 
-## 它实际会做什么？
+## 它实际会让 Agent 做什么？
 
-完整流程：
+`anxi-skill` 不是一个独立 CLI，也不会自己从终端里一口气跑完整条训练流水线。它提供的是 Agent 执行协议、输出模板和校验脚本。
+
+当 Agent 使用这个 skill 时，应按下面的流程工作：
 
 ```text
 读取目标 skill package
@@ -337,7 +339,7 @@ python -m unittest tests.test_scripts -v
 ### rejected buffer：拒绝缓冲区
 
 被拒绝的修改不会消失。  
-它会进入 rejected buffer，成为下次训练的负面记忆。
+使用 `anxi-skill` 的 Agent 应按模板把它写入目标 skill 项目的 `.anxi/rejected.md`，作为下次训练的负面记忆。
 
 记录内容包括：
 
@@ -358,7 +360,7 @@ python -m unittest tests.test_scripts -v
 
 ### training log：训练日志
 
-每次训练都会留下记录，包括：
+每次训练都应由 Agent 按模板留下记录，包括：
 
 ```text
 目标 Skill
@@ -540,7 +542,9 @@ check report
 candidate patch
 ```
 
-如果训练记录包含敏感项，可以脱敏后再提交。
+默认情况下，目标项目里的 `.anxi/` 是训练状态，不建议直接提交。
+
+如果你想公开训练案例，建议先脱敏，再复制到 `examples/`，或者显式决定把相关 `.anxi/` 记录纳入版本控制。
 
 ---
 
@@ -627,10 +631,12 @@ A skill’s problem is rarely just inside `SKILL.md`.
 
 ## Core Concepts
 
+`anxi-skill` is not a standalone CLI and does not automatically run the entire training pipeline from the terminal. It provides an Agent execution protocol, output templates, and validation scripts.
+
 - **target_move** — one round trains one unstable move. (“Reduce over-questioning”, not “Make it better”.)
 - **bounded patch** — local edits only (`insert`, `replace`, `delete`, `append`). Default budget: 3 patches.
 - **human-on-the-loop** — every candidate patch must be Approved, Rejected, Edited or Skipped by a human.
-- **rejected buffer** — rejected ideas are recorded as negative memory, so the same bad move doesn’t return next week in a different jacket.
+- **rejected buffer** — the Agent should record rejected ideas under the target skill project's `.anxi/rejected.md`, so the same bad move doesn’t return next week in a different jacket.
 - **validation** — patches to `scripts/` must declare and run verification commands. “Looks fine to me” is not a test.
 
 ---
